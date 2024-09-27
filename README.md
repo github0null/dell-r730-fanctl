@@ -54,15 +54,16 @@
    WantedBy=multi-user.target
    ```
 
-   5. 检查上面新建的 `fanctl.service` 文件里的注释，将 HOST, USER, PASS 都设置好，保存文件
+5. 检查上面新建的 `fanctl.service` 文件里的注释，将 HOST, USER, PASS 都设置好，保存文件
 
-   ### 启动
+### 启动
 
-   1. 执行 `systemctl restart fanctl` 启动服务，如果提示无法找到服务，可以执行一下：`systemctl daemon-reload`
-   2. 执行 `systemctl status fanctl` 查看服务状态
-  
+1. 执行 `systemctl restart fanctl` 启动服务，如果提示无法找到服务，可以执行一下：`systemctl daemon-reload`
+
+3. 执行 `systemctl status fanctl` 查看服务状态
+
    如果有如下日志，则已正常启动
-
+   
    ```
    ● fanctl.service - dell r730 fanctrl
      Loaded: loaded (/etc/systemd/system/fanctl.service; enabled; preset: enabled)
@@ -72,7 +73,7 @@
      Memory: 17.2M
         CPU: 1.965s
      CGroup: /system.slice/fanctl.service
-
+   
     Sep 27 17:19:07 r730-cl systemd[1]: Started fanctl.service - dell r730 fanctrl.
     Sep 27 17:19:07 r730-cl main.py[78880]: INFO:[r730-fanctl]:====== process startup: 2024/09/27 17:19:07 ======
     Sep 27 17:19:07 r730-cl main.py[78880]: INFO:[r730-fanctl]:IDRAC_HOST : 192.168.0.105
@@ -83,4 +84,4 @@
 
    接下来可以运行一些负载较高的程序，测试一下调速是否正常，比如 UnixBench
 
-   3. 检查调速功能无误后，执行 `systemctl enable fanctl` 将该服务设置为开机自启
+3. 检查调速功能无误后，执行 `systemctl enable fanctl` 将该服务设置为开机自启
