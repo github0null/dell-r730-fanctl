@@ -206,15 +206,11 @@ def poll_sensor():
         SENSOR_STATUS['DISK'] = None
         logger.warning(f'skip DISK temp. {err}.')
 
-    # get GPU temp
-    # inxi -xG
+    # nvidia-smi -q -d TEMPERATURE
+    # GPU Current Temp : 32 C
     try:
-        # inxi -xG
-        # Graphics:
-        #     Device-1: Matrox Systems G200eR2 vendor: Dell driver: mgag200 v: kernel bus-ID: 0b:00.0
-        #     Display: server: No display server data found. Headless machine? tty: 187x41
-        for line in exec_cmd('inxi -c 0 -xG'):
-            m = re.search(r'temp\: ([\-\d\.]+) C', line)
+        for line in exec_cmd('nvidia-smi -q -d TEMPERATURE'):
+            m = re.search(r'GPU Current Temp\s*\:\s*([\-\d\.]+) C', line)
             if m:
                 logger.debug(f'match line: {line}')
                 n = float(m[1])
@@ -332,7 +328,7 @@ def adjust():
         SPD_HOLD_CNT = 0
     elif pwm < FAN_CUR_PWM:
         SPD_HOLD_CNT += 1
-        if get_cpu_usage() < 50 and SPD_HOLD_CNT >= (120 / ADJ_PERIOD):
+        if get_cpu_usage() < 50 and SPD_HOLD_CNT >= (90 / ADJ_PERIOD):
             SPD_HOLD_CNT = 0
             logger.info(f"↘ fan speed down -> {pwm} %")
             fan_speed_ctrl(pwm)
