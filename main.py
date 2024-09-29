@@ -314,7 +314,7 @@ def compute_fan_output() -> int:
     # make result
     next_speed = base_spd + gpu_gain + disk_gain
     next_speed *= inlet_gain
-    return next_speed
+    return int(next_speed)
 
 def adjust():
     global SPD_HOLD_CNT
