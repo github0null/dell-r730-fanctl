@@ -97,9 +97,9 @@ FAN_SPEED_MAP = {
     'CPU': [
         (35, FANCTL_MIN_SPD),
         (40, 12),
-        (45, 15),
-        (50, 20),
-        (55, 25),
+        (45, 12),
+        (50, 18),
+        (55, 24),
         (60, 30),
         (65, 40),
         (70, 50),
@@ -118,9 +118,9 @@ FAN_SPEED_MAP = {
     ],
     'GAIN_Inlet': [
         (25, 1),
-        (30, 1.2),
-        (STD_OPT_TEMP, 1.4),
-        (EXT_OPT_TEMP, 1.6)
+        (32, 1.2),
+        (STD_OPT_TEMP, 1.3),
+        (EXT_OPT_TEMP, 1.5)
     ],
     'GAIN_DISK': [
         (45, 1),
@@ -314,6 +314,7 @@ def compute_fan_output() -> int:
     # make result
     next_speed = base_spd + gpu_gain + disk_gain
     next_speed *= inlet_gain
+    logger.debug(f'compute fan speed: {int(next_speed)} = (base:{base_spd} + gpu:{gpu_gain} + disk:{disk_gain}) * {inlet_gain}')
     return int(next_speed)
 
 def adjust():
@@ -333,7 +334,7 @@ def adjust():
             logger.info(f"↘ fan speed down -> {pwm} %")
             fan_speed_ctrl(pwm)
         else:
-            logger.info(f"fan speed no change, waiting system low load ...")
+            logger.info(f"fan speed no change, pwm: {FAN_CUR_PWM} %, waiting system low load ...")
     else:
         logger.info(f"fan speed no change, pwm: {FAN_CUR_PWM} %")
 
