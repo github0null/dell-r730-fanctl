@@ -123,8 +123,8 @@ FAN_SPEED_MAP = {
         (EXT_OPT_TEMP, 1.5)
     ],
     'GAIN_DISK': [
-        (45, 1),
-        (48, 3),
+        (48, 1),
+        (50, 3),
         (53, 5),
         (56, 8),
         (59, 10),
@@ -438,5 +438,7 @@ def main(host: str, user: str, passwd: str, min_speed: int, set_pwm: int, fallba
 if __name__ == '__main__':
     try:
         main()
+        sys.exit(-1)
     except Exception as err:
-        logger.error(f'Fatal error: {str(err)}. process exit.', err)
+        logger.error(f'Fatal error: {str(err)}. process exit.')
+        sys.exit(-1)
